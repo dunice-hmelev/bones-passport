@@ -35,11 +35,13 @@ server = Bones.Server.extend({
         this.use(passport.initialize());
         this.use(passport.session());
         this.use(this.router);
-        this.get('/auth/' + this.key, passport.authenticate(this.key, 
-            { successRedirect: '/', failureRedirect: '/error' }));
+	
+		
+        this.post('/auth/' + this.key, passport.authenticate(this.key, 
+            { successRedirect: '/', failureRedirect: '/login', failureFlash: true }));
 
         this.get('/logout', function(req, res){
-            req.logout();
+            req.logout(); 
             res.redirect('/');
         });
     }
